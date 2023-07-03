@@ -1,0 +1,32 @@
+import requests
+
+# Ваш персональный токен доступа к GitHub API
+access_token = 'YOUR_ACCESS_TOKEN'
+
+# Заголовок авторизации
+headers = {'Authorization': f'token {access_token}'}
+
+# URL для создания репозитория
+url = 'https://api.github.com/user/repos'
+
+# Информация о репозитории
+repo_name = 'my-new-repo'
+repo_description = 'This is a new repository created via API'
+repo_private = False
+
+# Параметры запроса
+params = {
+    'name': repo_name,
+    'description': repo_description,
+    'private': repo_private
+}
+
+# Отправка POST-запроса для создания репозитория
+response = requests.post(url, headers=headers, json=params)
+
+if response.status_code == 201:
+    print(f"Repository '{repo_name}' successfully created!")
+    print(f"URL: {response.json()['html_url']}")
+else:
+    print("Failed to create repository.")
+    print(f"Response: {response.json()}")
